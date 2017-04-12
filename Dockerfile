@@ -3,24 +3,23 @@ LABEL maintainer "marcelo.andrade.r@gmail.com"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-COPY ./DIMMInstaladorLinux-x86-1.7 /
-
 RUN apt-get update -y 
 RUN apt-get install -y --force-yes --no-install-recommends \
    -o Dpkg::Options::="--force-confdef" \
    -o Dpkg::Options::="--force-confold" \
-   libmodern-perl-perl \
-   libcompress-raw-lzma-perl \
-   libterm-progressbar-perl \
-   libdata-dump-perl \
-   libfile-homedir-perl \
-   wget
+   wget \
+   unzip
 
-# Extract the installer contents in order to use directly
-# the installer doesn't work on 64 bit architectures
-RUN wget --no-check-certificate "https://raw.githubusercontent.com/lod/unpack-install-jammer/master/extract.pl"
-RUN chmod +x /extract.pl
-RUN perl /extract.pl /DIMMInstaladorLinux-x86-1.7 || true
+# link from http://www.sri.gob.ec/web/10138/665
+#  Programa DIMM Formularios genérico (17.9 MB) fecha de actualización 03-02-2017
+RUN wget --no-check-certificate "http://descargas.sri.gob.ec/download/declaraciones/DIMM_2017_02/Otras_Versiones/dimmFormularios4J-1.7.zip"
 
-RUN chmod +x install_dir/root/dimm/dimmFormularios4JUnix.sh
-CMD "install_dir/root/dimm/dimmFormularios4JUnix.sh"
+RUN unzip dimmFormularios4J-1.7.zip -d /opt/dimm
+
+RUN rm dimmFormularios4J-1.7.zip
+
+RUN chmod +x /opt/dimm/dimmFormularios4JUnix.sh
+# Remove & to execute in background
+RUN sed -i s/\&// /opt/dimm/dimmFormularios4JUnix.sh
+
+CMD /opt/dimm/dimmFormularios4JUnix.sh
