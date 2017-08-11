@@ -12,11 +12,11 @@ RUN apt-get install -y --force-yes --no-install-recommends \
 
 # link from http://www.sri.gob.ec/web/10138/665
 #  Programa DIMM Formularios genérico (17.9 MB) fecha de actualización 03-02-2017
-RUN wget --no-check-certificate "http://descargas.sri.gob.ec/download/declaraciones/DIMM_2017_02/Otras_Versiones/dimmFormularios4J-1.7.zip"
+RUN wget --no-check-certificate "http://descargas.sri.gob.ec/download/declaraciones/DIMM_2017_07/GENERICO/dimmFormularios4J-1.8.zip"
 
-RUN unzip dimmFormularios4J-1.7.zip -d /opt/dimm
+RUN unzip dimmFormularios4J-1.8.zip -d /opt/dimm
 
-RUN rm dimmFormularios4J-1.7.zip
+RUN rm dimmFormularios4J-1.8.zip
 
 RUN chmod +x /opt/dimm/dimmFormularios4JUnix.sh
 # Remove & to execute in background
